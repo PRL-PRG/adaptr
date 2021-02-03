@@ -77,23 +77,31 @@ adaptr_object_t adaptr_object_unwrap(SEXP r_object) {
  *******************************************************************************/
 
 /* mutator  */
-int adaptr_object_acquire(void* object) {
-    adaptr_object_t obj = (adaptr_object_t)(object);
-    obj->reference_count += 1;
-    return obj->reference_count;
+int adaptr_object_acquire(adaptr_object_t object) {
+    object->reference_count += 1;
+    return object->reference_count;
 }
 
 /* mutator  */
-int adaptr_object_release(void* object) {
-    adaptr_object_t obj = (adaptr_object_t)(object);
-    obj->reference_count -= 1;
-    int reference_count = obj->reference_count;
+int adaptr_object_release(adaptr_object_t object) {
+    object->reference_count -= 1;
+    int reference_count = object->reference_count;
 
     if (reference_count == 0) {
-        adaptr_object_destroy(obj);
+        adaptr_object_destroy(object);
     }
 
     return reference_count;
+}
+
+int adaptr_object_get_reference_count(adaptr_object_t object) {
+    return object->reference_count;
+}
+
+SEXP r_adaptr_object_get_reference_count(SEXP r_object) {
+    adaptr_object_t object = adaptr_object_unwrap(r_object);
+    int result = adaptr_object_get_reference_count(object);
+    return ScalarInteger(result);
 }
 
 /*******************************************************************************
@@ -101,9 +109,10 @@ int adaptr_object_release(void* object) {
  *******************************************************************************/
 
 adaptr_object_type_t adaptr_object_create_type(const char** class_names) {
-    int class_name_count = 0;
-    while(class_names[class_name_count++] != NULL);
 
+    int class_name_count = 0;
+
+    while(class_names[class_name_count++] != NULL);
 
     SEXP r_class = PROTECT(allocVector(STRSXP, class_name_count + 1));
 
@@ -131,7 +140,7 @@ SEXP adaptr_object_get_class(adaptr_object_type_t object_type) {
  *******************************************************************************/
 
 /* accessor */
-adaptr_id_t adaptr_object_get_id(void* object) {
+adaptr_id_t adaptr_object_get_id(adaptr_object_t object) {
     adaptr_object_t obj = (adaptr_object_t)(object);
     return obj->id;
 }
@@ -148,19 +157,19 @@ SEXP r_adaptr_object_get_id(SEXP r_object) {
  *******************************************************************************/
 
 /* accessor */
-int adaptr_object_has_data(void* object) {
+int adaptr_object_has_data(adaptr_object_t object) {
     adaptr_object_t obj = (adaptr_object_t)(object);
     return obj->r_data != NULL;
 }
 
 SEXP r_adaptr_object_has_data(SEXP r_object) {
-    void* object = adaptr_object_unwrap(r_object);
+    adaptr_object_t object = adaptr_object_unwrap(r_object);
     int result = adaptr_object_has_data(object);
     return ScalarLogical(result);
 }
 
 /* accessor */
-SEXP adaptr_object_get_data(void* object) {
+SEXP adaptr_object_get_data(adaptr_object_t object) {
     adaptr_object_t obj = (adaptr_object_t)(object);
     if (adaptr_object_has_data(obj)) {
         return obj->r_data;
@@ -178,7 +187,7 @@ SEXP r_adaptr_object_get_data(SEXP r_object) {
 }
 
 /* mutator  */
-void adaptr_object_set_data(void* object, SEXP r_data) {
+void adaptr_object_set_data(adaptr_object_t object, SEXP r_data) {
     adaptr_object_t obj = (adaptr_object_t)(object);
     adaptr_object_remove_data(obj);
     adaptr_sexp_acquire(r_data);
@@ -193,7 +202,7 @@ SEXP r_adaptr_object_set_data(SEXP r_object, SEXP r_data) {
 }
 
 /* mutator  */
-void adaptr_object_remove_data(void* object) {
+void adaptr_object_remove_data(adaptr_object_t object) {
     adaptr_object_t obj = (adaptr_object_t)(object);
     if (adaptr_object_has_data(obj)) {
         adaptr_sexp_release(obj->r_data);

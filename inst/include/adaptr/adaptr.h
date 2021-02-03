@@ -88,7 +88,7 @@ extern "C" {
         11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
 
 #define BINDING_DECLARATOR(NAME, RETURN, ...) \
-    { #NAME, (DL_FUNC) &NAME, COUNT_VARARG(__VA_ARGS__) },
+    {#NAME, (DL_FUNC) &NAME, COUNT_VARARG(__VA_ARGS__)},
 
 /********************************************************************************
  interop
@@ -163,37 +163,34 @@ extern "C" {
  OBJECT API
  *******************************************************************************/
 
-#define ADAPTR_OBJECT_C_API_MAP(MACRO)                                     \
-    MACRO(adaptr_object_create_type,                                       \
-          adaptr_object_type_t,                                            \
-          const char** class_names)                                        \
-    MACRO(adaptr_object_get_class, SEXP, adaptr_object_type_t object_type) \
-    MACRO(adaptr_object_create,                                            \
-          adaptr_object_t,                                                 \
-          int size,                                                        \
-          adaptr_object_type_t type,                                       \
-          adaptr_object_finalizer_t finalizer)                             \
-    MACRO(adaptr_object_wrap, SEXP, adaptr_object_t object)                \
-    MACRO(adaptr_object_unwrap, adaptr_object_t, SEXP r_object)            \
-    MACRO(adaptr_object_acquire, int, void* object)                        \
-    MACRO(adaptr_object_release, int, void* object)                        \
-    MACRO(adaptr_object_get_id, adaptr_id_t, void* object)                 \
-    MACRO(r_adaptr_object_get_id, SEXP, SEXP r_object)                     \
-    MACRO(adaptr_object_has_data, int, void* object)                       \
-    MACRO(r_adaptr_object_has_data, SEXP, SEXP r_object)                   \
-    MACRO(adaptr_object_set_data, void, void* object, SEXP r_data)         \
-    MACRO(r_adaptr_object_set_data, SEXP, SEXP r_object, SEXP r_data)      \
-    MACRO(adaptr_object_get_data, SEXP, void* object)                      \
-    MACRO(r_adaptr_object_get_data, SEXP, SEXP r_object)                   \
-    MACRO(adaptr_object_remove_data, void, void* object)                   \
-    MACRO(r_adaptr_object_remove_data, SEXP, SEXP r_object)
+#define ADAPTR_OBJECT_C_API_MAP(MACRO)                                       \
+    MACRO(adaptr_object_create_type,                                         \
+          adaptr_object_type_t,                                              \
+          const char** class_names)                                          \
+    MACRO(adaptr_object_get_class, SEXP, adaptr_object_type_t object_type)   \
+    MACRO(adaptr_object_create,                                              \
+          adaptr_object_t,                                                   \
+          int size,                                                          \
+          adaptr_object_type_t type,                                         \
+          adaptr_object_finalizer_t finalizer)                               \
+    MACRO(adaptr_object_wrap, SEXP, adaptr_object_t object)                  \
+    MACRO(adaptr_object_unwrap, adaptr_object_t, SEXP r_object)              \
+    MACRO(adaptr_object_acquire, int, adaptr_object_t object)                \
+    MACRO(adaptr_object_release, int, adaptr_object_t object)                \
+    MACRO(adaptr_object_get_id, adaptr_id_t, adaptr_object_t object)         \
+    MACRO(adaptr_object_has_data, int, adaptr_object_t object)               \
+    MACRO(adaptr_object_set_data, void, adaptr_object_t object, SEXP r_data) \
+    MACRO(adaptr_object_get_data, SEXP, adaptr_object_t object)              \
+    MACRO(adaptr_object_remove_data, void, adaptr_object_t object)           \
+    MACRO(adaptr_object_get_reference_count, int, adaptr_object_t object)
 
 #define ADAPTR_OBJECT_R_API_MAP(MACRO)                                \
     MACRO(r_adaptr_object_get_id, SEXP, SEXP r_object)                \
     MACRO(r_adaptr_object_has_data, SEXP, SEXP r_object)              \
     MACRO(r_adaptr_object_set_data, SEXP, SEXP r_object, SEXP r_data) \
     MACRO(r_adaptr_object_get_data, SEXP, SEXP r_object)              \
-    MACRO(r_adaptr_object_remove_data, SEXP, SEXP r_object)
+    MACRO(r_adaptr_object_remove_data, SEXP, SEXP r_object)           \
+    MACRO(r_adaptr_object_get_reference_count, SEXP, SEXP r_object)
 
 #define ADAPTR_OBJECT_API_MAP(MACRO) \
     ADAPTR_OBJECT_C_API_MAP(MACRO)   \

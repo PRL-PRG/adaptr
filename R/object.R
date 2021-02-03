@@ -44,6 +44,19 @@ get_id.adaptr_object <- function(object) {
     .Call(r_adaptr_object_get_id, object)
 }
 
+
+#' @export
+#' @rdname object
+get_reference_count <- function(object) {
+    UseMethod("get_reference_count")
+}
+
+#' @export
+get_reference_count.adaptr_object <- function(object) {
+    .Call(r_adaptr_object_get_reference_count, object)
+}
+
+
 #' @export
 #' @rdname object
 set_data <- function(object, data) {
