@@ -1,0 +1,28 @@
+Type: Package
+Package: adaptr
+Title: Package for mediating custom object representation
+Version: 0.1
+Authors@R: 
+    person(given = "Aviral",
+           family = "Goel",
+           role = c("aut", "cre"),
+           email = "goel.aviral@gmail.com",
+           comment = c(ORCID = "0000-0002-0814-5015"))
+Description: adaptr is a dependency for many packages
+             that rely upon its custom object representation
+             for passing objects between C and R.
+License: MIT + file LICENSE
+URL: https://prl-prg.github.io/adaptr/
+BugReports: https://github.com/PRL-PRG/adaptr/issues
+Encoding: UTF-8
+LazyData: true
+SystemRequirements: C++11
+Suggests:
+    covr,
+    knitr,
+    rmarkdown,
+    dplyr,
+    testthat
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr
