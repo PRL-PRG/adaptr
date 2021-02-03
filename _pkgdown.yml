@@ -1,0 +1,33 @@
+url: https://prl-prg.github.io/adaptr/
+
+template:
+  params:
+    bootswatch: cosmo
+    ganalytics: UA-46114889-3
+
+navbar:
+  title: "adaptr"
+  left:
+    - text: "Articles"
+      href: articles/index.html
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Issues"
+      href: https://github.com/PRL-PRG/adaptr/issues
+  right:
+   - icon: fa-github
+     href: https://github.com/PRL-PRG/adaptr
+
+reference:
+
+- title: "Object"
+- contents:
+    - get_id
+    - get_data
+    - set_data
+    - has_data
+    - remove_data
+
+authors:
+  Aviral Goel:
+    href: http://aviral.io
