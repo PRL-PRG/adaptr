@@ -2,7 +2,7 @@ R := R
 SOURCEDIR := src
 INCLUDEDIR := inst/include
 
-SOURCES := $(shell find $(SOURCEDIR) -name '*.cpp')
+SOURCES := $(shell find $(SOURCEDIR) -name '*.cpp') $(shell find $(SOURCEDIR) -name '*.c')
 INCLUDES := $(shell find $(INCLUDEDIR) -name '*.hpp') $(shell find $(SOURCEDIR) -name '*.h')
 
 CPPCHECK := cppcheck
