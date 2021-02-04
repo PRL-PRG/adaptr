@@ -2,7 +2,7 @@ pandoc: 2.7.3
 pkgdown: 1.6.1.9000
 pkgdown_sha: c931fe24c135c6ca704ae9f300470e9c66d8bfe7
 articles: {}
-last_built: 2021-02-03T23:59Z
+last_built: 2021-02-04T00:00Z
 urls:
   reference: https://prl-prg.github.io/adaptr//reference
   article: https://prl-prg.github.io/adaptr//articles
