@@ -164,6 +164,8 @@ extern "C" {
  *******************************************************************************/
 
 #define ADAPTR_OBJECT_C_API_MAP(MACRO)                                       \
+    MACRO(adaptr_get_total_object_count, int)                                \
+    MACRO(adaptr_get_alive_object_count, int)                                \
     MACRO(adaptr_object_create_type,                                         \
           adaptr_object_type_t,                                              \
           const char** class_names)                                          \
@@ -185,6 +187,8 @@ extern "C" {
     MACRO(adaptr_object_get_reference_count, int, adaptr_object_t object)
 
 #define ADAPTR_OBJECT_R_API_MAP(MACRO)                                \
+    MACRO(r_adaptr_get_total_object_count, SEXP)                      \
+    MACRO(r_adaptr_get_alive_object_count, SEXP)                      \
     MACRO(r_adaptr_object_get_id, SEXP, SEXP r_object)                \
     MACRO(r_adaptr_object_has_data, SEXP, SEXP r_object)              \
     MACRO(r_adaptr_object_set_data, SEXP, SEXP r_object, SEXP r_data) \

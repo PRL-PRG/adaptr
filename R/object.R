@@ -35,6 +35,18 @@ NULL
 
 #' @export
 #' @rdname object
+get_total_object_count <- function() {
+    .Call(r_get_total_object_count)
+}
+
+#' @export
+#' @rdname object
+get_alive_object_count <- function() {
+    .Call(r_get_alive_object_count)
+}
+
+#' @export
+#' @rdname object
 get_id <- function(object) {
     UseMethod("get_id")
 }

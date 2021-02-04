@@ -3,15 +3,35 @@
 #include "type_table.h"
 
 static int object_counter = 0;
+static int finalization_counter = 0;
+
+/*******************************************************************************
+ * stats
+ *******************************************************************************/
+
+int adaptr_get_total_object_count() {
+    return object_counter;
+}
+
+SEXP r_adaptr_get_total_object_count() {
+    return ScalarInteger(adaptr_get_total_object_count());
+}
+
+int adaptr_get_alive_object_count() {
+    return object_counter - finalization_counter;
+}
+
+SEXP r_adaptr_get_alive_object_count() {
+    return ScalarInteger(adaptr_get_alive_object_count());
+}
 
 /*******************************************************************************
  * create
  *******************************************************************************/
 
-adaptr_object_t
-adaptr_object_create(int size,
-                     adaptr_object_type_t type,
-                     adaptr_object_finalizer_t finalizer) {
+adaptr_object_t adaptr_object_create(int size,
+                                     adaptr_object_type_t type,
+                                     adaptr_object_finalizer_t finalizer) {
     adaptr_object_t object = (adaptr_object_t) calloc(1, size);
 
     if (object == NULL) {
@@ -37,6 +57,8 @@ void adaptr_object_destroy(adaptr_object_t object) {
     adaptr_object_remove_data(object);
     object->finalizer = NULL;
     object->id = -1;
+
+    ++finalization_counter;
 
     free(object);
 }
